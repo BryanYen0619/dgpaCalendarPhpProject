@@ -43,8 +43,14 @@ function checkHoliday($input) {
     }
 
     // 日期格式化
-    $beginDate = date_create($member_date);
-    $formatdate = date_format($beginDate, 'Y/m/d');
+    $inputBeginDate = date_create($member_date);
+    $beginDate = date_format($inputBeginDate, 'Y/m/d');
+    
+    // 日期時區轉換 Asia -> UTC  
+    $beginDate->setTimezone(new DateTimeZone('UTC'));
+    
+    // 日期取Timestamp
+    $beginDateTimestamp = $beginDate->getTimestamp();
 
     // SQL init
     require_once('Connections/link.php');
@@ -54,7 +60,7 @@ function checkHoliday($input) {
 
     // 取得資料
     $selectSql = "SELECT * FROM $db_table_name "
-            . "WHERE date LIKE '$formatdate' "
+            . "WHERE UNIX_TIMESTAMP(STR_TO_DATE(date, '%Y/%m/%d')) LIKE '$beginDateTimestamp' "
             . "LIMIT 1 ";
     if ($isHightPhpVersion) {
         $selectSqlQuery = mysqli_query($mysql, $selectSql);
