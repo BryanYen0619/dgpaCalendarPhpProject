@@ -82,14 +82,14 @@ if ($successStatus == 1) {
                             . ",'$holidayCategory' "
                             . ",'$description' "
                             . ",'$isWorkerHoliday') ";
-                    echo "$instertSql\n";
+//                    echo "$instertSql\n";
                     if ($isHightPhpVersion) {
                         $insertResult = mysqli_query($mysql, $instertSql);
                     } else {
                         $insertResult = mysql_query($instertSql);
                     }
                     
-//                    $insertCount++;
+                    $insertCount++;
                 } else {
                     if ($rows != null) {
                         foreach ($rows as $key => $value) {
