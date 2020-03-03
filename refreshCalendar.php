@@ -77,17 +77,18 @@ if ($successStatus == 1) {
                             . ",description "
                             . ",isWorkerHoliday) "
                             . "VALUES ('$date' "
+                            . ",'$name' "
                             . ",'$isHoliday' "
                             . ",'$holidayCategory' "
                             . ",'$description' "
                             . ",'$isWorkerHoliday') ";
                     echo "$instertSql\n";
-//                    if ($isHightPhpVersion) {
-//                        $insertResult = mysqli_query($mysql, $instertSql);
-//                    } else {
-//                        $insertResult = mysql_query($instertSql);
-//                    }
-//                    
+                    if ($isHightPhpVersion) {
+                        $insertResult = mysqli_query($mysql, $instertSql);
+                    } else {
+                        $insertResult = mysql_query($instertSql);
+                    }
+                    
 //                    $insertCount++;
                 } else {
                     if ($rows != null) {
@@ -98,6 +99,7 @@ if ($successStatus == 1) {
                         // 更新
                         $updateSql = "UPDATE $db_table_name SET "
                                 . "date = '$date' "
+                                . ",name = '$name' "
                                 . ",isHoliday = '$isHoliday' "
                                 . ",holidayCategory = '$holidayCategory' "
                                 . ",description = '$description' "
