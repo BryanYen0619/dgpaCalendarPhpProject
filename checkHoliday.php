@@ -54,7 +54,7 @@ function checkHoliday($input) {
 
     // 取得資料
     $selectSql = "SELECT * FROM $db_table_name "
-            . "WHERE date LIKE $beginDate "
+            . "WHERE date LIKE '$beginDate' "
             . "LIMIT 1 ";
     if ($isHightPhpVersion) {
         $selectSqlQuery = mysqli_query($mysql, $selectSql);
