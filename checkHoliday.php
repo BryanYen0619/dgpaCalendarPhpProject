@@ -36,7 +36,6 @@ switch ($method) {
 function checkHoliday($input) {
     $member_date = $input['date'];
 
-
     if (!isset($member_date)) {
         $error = array('errorcode' => 502, 'errormessage' => '參數不足');
         echo json_encode($error);
@@ -44,7 +43,8 @@ function checkHoliday($input) {
     }
 
     // 日期格式化
-    $beginDate = date_create_from_format('Y/m/d', $member_date);
+    $beginDate = date_create($member_date);
+    $formatdate = date_format($beginDate, 'Y/m/d');
 
     // SQL init
     require_once('Connections/link.php');
@@ -54,7 +54,7 @@ function checkHoliday($input) {
 
     // 取得資料
     $selectSql = "SELECT * FROM $db_table_name "
-            . "WHERE date LIKE '$beginDate' "
+            . "WHERE date LIKE '$formatdate' "
             . "LIMIT 1 ";
     if ($isHightPhpVersion) {
         $selectSqlQuery = mysqli_query($mysql, $selectSql);
