@@ -44,7 +44,7 @@ if ($successStatus == 1) {
                 }
                 
                 require_once('Connections/link.php');
-                $db_table_name = 'dgpa_gov_calendar_table';
+                $db_table_name = 'calendar_table';
 
                 // 取得電子發票資料
                 $selectSql = "SELECT id FROM $db_table_name "
