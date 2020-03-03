@@ -42,10 +42,9 @@ function checkHoliday($input) {
         return;
     }
 
-    // 日期格式化
-    $inputBeginDate = date_create($member_date);
-    $beginDate = date_format($inputBeginDate, 'Y/m/d');
-    
+    // 日期建立
+    $beginDate = date_create($member_date);
+   
     // 日期時區轉換 Asia -> UTC  
     $beginDate->setTimezone(new DateTimeZone('UTC'));
     
