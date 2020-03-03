@@ -49,14 +49,21 @@ if ($successStatus == 1) {
                 // 取得電子發票資料
                 $selectSql = "SELECT id FROM $db_table_name "
                         . "WHERE date LIKE '$date' "
-                        . "AND isWorkerHoliday LIKE 1 "
+                        . "AND isWorkerHoliday IS true "
                         . "LIMIT 1";
+                $rows = null;
                 if ($isHightPhpVersion) {
                     $selectSqlQuery = mysqli_query($mysql, $selectSql);
                     $selectSqlQueryNum = mysqli_num_rows($selectSqlQuery);
+                    while ($row = mysqli_fetch_assoc($selectSqlQuery)) {
+                            $rows[] = $row;
+                        }
                 } else {
                     $selectSqlQuery = mysql_query($selectSql);
                     $selectSqlQueryNum = mysql_num_rows($selectSqlQuery);
+                    while ($row = mysql_fetch_assoc($selectSqlQuery)) {
+                            $rows[] = $row;
+                        }
                 }
 
                 $insertCount = 0;
@@ -82,17 +89,6 @@ if ($successStatus == 1) {
                     
                     $insertCount++;
                 } else {
-                    $rows = null;
-                    if ($isHightPhpVersion) {
-                        while ($row = mysqli_fetch_assoc($selectSqlQuery)) {
-                            $rows[] = $row;
-                        }
-                    } else {
-                        while ($row = mysql_fetch_assoc($selectSqlQuery)) {
-                            $rows[] = $row;
-                        }
-                    }
-                    
                     if ($rows != null) {
                         foreach ($rows as $key => $value) {
                             $id = $value['id'];
