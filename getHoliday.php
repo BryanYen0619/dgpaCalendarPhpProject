@@ -34,7 +34,10 @@ switch ($method) {
  * */
 function getHoliday() {
 
-    $year = $_GET['year'];
+    $year = null;
+    if (isset($_GET['year'])) {
+        $year = $_GET['year'];
+    }
 
     // SQL init
     require_once('Connections/link.php');
