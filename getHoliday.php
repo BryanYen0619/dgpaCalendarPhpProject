@@ -8,8 +8,7 @@
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
-$input = json_decode(file_get_contents('php://input'), true);
-
+//$input = json_decode(file_get_contents('php://input'), true);
 //echo var_dump($input);
 // create SQL based on HTTP method
 switch ($method) {
@@ -35,15 +34,24 @@ switch ($method) {
  * */
 function getHoliday() {
 
+    $year = $_GET['year'];
+
     // SQL init
     require_once('Connections/link.php');
     // SQL Select table
     $db_table_name = 'calendar_table';
 
-    
+
     // 取得資料
+    if ($year == null) {
         $selectSql = "SELECT * FROM $db_table_name "
-                . "WHERE isWorkerHoliday IS true " ;
+                . "WHERE isWorkerHoliday IS true ";
+    } else {
+        $selectSql = "SELECT * FROM $db_table_name "
+                . "WHERE date >= CAST('$year-01-01' AS DATE)"
+                . "AND date <= CAST('$year-12-31' AS DATE)"
+                . "AND isWorkerHoliday IS true ";
+    }
     if ($isHightPhpVersion) {
         $selectSqlQuery = mysqli_query($mysql, $selectSql);
     } else {
