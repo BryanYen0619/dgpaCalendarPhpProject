@@ -130,9 +130,9 @@ function getHolidayList($inputDate) {
 
 function isChtHoliday($holidayList, $inputdate) {
     for ($i = 0; $i < sizeof($holidayList); $i++) {
-        $holidayDate = date_create($holidayList[$i]['date'])->format('Ymd');
+        $holidayDate = date_create($holidayList[$i]['date'])->format('Y-m-d');
         
-        echo $inputdate." VS ".$holidayDate."\n";
+//        echo $inputdate." VS ".$holidayDate."\n";
         if ($inputdate == $holidayDate) {
             return true;
         }
