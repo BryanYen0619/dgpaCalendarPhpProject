@@ -7,8 +7,39 @@
  */
 
 date_default_timezone_set("Asia/Taipei");
+// get the HTTP method, path and body of the request
+$method = $_SERVER['REQUEST_METHOD'];
+$input = json_decode(file_get_contents('php://input'), true);
 
-function getAppropriationDate($inputDate) {
+//echo var_dump($input);
+// create SQL based on HTTP method
+switch ($method) {
+    case 'GET':
+        #$sql = "select * from `$table`".($key?" WHERE id=$key":''); break;
+        echo 'Not Support GET' . "\n";
+        break;
+    case 'PUT':
+        #$sql = "update `$table` set $set where id=$key"; break;
+        echo 'Not Support PUT' . "\n";
+        break;
+    case 'POST':
+        getAppropriationDate($input);
+        break;
+    case 'DELETE':
+        #$sql = "delete `$table` where id=$key"; break;
+        echo 'Not Support DELETE' . "\n";
+        break;
+}
+
+function getAppropriationDate($input) {
+    $inputDate = $input['date'];
+
+    if (!isset($inputDate)) {
+        $error = array('errorcode' => 502, 'errormessage' => '參數不足');
+        echo json_encode($error);
+        return;
+    }
+    
     // 取得休假列表
     $holidayList = getHolidayList($inputDate);
     
