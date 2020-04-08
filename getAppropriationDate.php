@@ -61,7 +61,6 @@ function getAppropriationDate($input) {
     }
     
     $appropriationDate = date_format($new_date, 'Y-m-d');
-    echo $appropriationDate."\n";
     
     // 判斷請求日期是否為假日
     $checkCurrentDateIsChtHoliday = isChtHoliday($holidayList, $appropriationDate);
@@ -69,10 +68,8 @@ function getAppropriationDate($input) {
     if ($checkCurrentDateIsChtHoliday) {
         while (1) {
             $appropriationDate = date('Y-m-d', strtotime("$appropriationDate +1 Days"));
-            echo $appropriationDate."\n";
             $check = isChtHoliday($holidayList, $appropriationDate);
             if (!$check) {
-                echo "get not holiday : ".$appropriationDate."\n";
                 break;
             }
         }
@@ -133,9 +130,8 @@ function getHolidayList($inputDate) {
 
 function isChtHoliday($holidayList, $inputdate) {
     for ($i = 0; $i < sizeof($holidayList); $i++) {
-        //         echo "[".$i."]".$chtHolidayData[$i]['date']."\n";
-
         $holidayDate = date_create($holidayList[$i]['date']);
+        echo $inputdate." VS ".$holidayDate."\n";
         if ($inputdate == $holidayDate) {
             return true;
         }
