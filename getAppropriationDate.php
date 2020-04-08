@@ -42,41 +42,41 @@ function getAppropriationDate($input) {
     
     // 取得休假列表
     $holidayList = getHolidayList($inputDate);
-    
-    $date = date_create($inputDate);
-    
-    $dateYearMonth = date_format($date, 'Ym');
-    $yearCount = date_format($date, 'Y');
-    $monthCount = date_format($date, 'm');
-    $dayCount = date_format($date, 'd');
-    if ($dayCount >= 1 && $dayCount <= 10) {
-        $new_date = date_create($dateYearMonth . "22"); 
-    } else if ($dayCount >= 11 && $dayCount <= 20) {        
-        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
-        $new_date = date_create($dateYearMonth . "02");  
-    } else if ($dayCount >= 21 && $dayCount <= 31) {
-        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
-        $new_date = date_create($dateYearMonth . "12");
-    } else {
-        $new_date = -1;
-    }
-    
-    $appropriationDate = date_format($new_date, 'Ymd');
-    
-    // 判斷請求日期是否為假日
-    $checkCurrentDateIsChtHoliday = isChtHoliday($holidayList, $appropriationDate);
-    // 找下一個工作日
-    if ($checkCurrentDateIsChtHoliday) {
-        while (1) {
-            $appropriationDate = date('Ymd', strtotime("$appropriationDate +1 Days"));
-            $check = isChtHoliday($holidayList, $appropriationDate);
-            if (!$check) {
-                break;
-            }
-        }
-    }
+    var_dump($holidayList);
+//    $date = date_create($inputDate);
+//    
+//    $dateYearMonth = date_format($date, 'Ym');
+//    $yearCount = date_format($date, 'Y');
+//    $monthCount = date_format($date, 'm');
+//    $dayCount = date_format($date, 'd');
+//    if ($dayCount >= 1 && $dayCount <= 10) {
+//        $new_date = date_create($dateYearMonth . "22"); 
+//    } else if ($dayCount >= 11 && $dayCount <= 20) {        
+//        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+//        $new_date = date_create($dateYearMonth . "02");  
+//    } else if ($dayCount >= 21 && $dayCount <= 31) {
+//        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+//        $new_date = date_create($dateYearMonth . "12");
+//    } else {
+//        $new_date = -1;
+//    }
+//    
+//    $appropriationDate = date_format($new_date, 'Ymd');
+//    
+//    // 判斷請求日期是否為假日
+//    $checkCurrentDateIsChtHoliday = isChtHoliday($holidayList, $appropriationDate);
+//    // 找下一個工作日
+//    if ($checkCurrentDateIsChtHoliday) {
+//        while (1) {
+//            $appropriationDate = date('Ymd', strtotime("$appropriationDate +1 Days"));
+//            $check = isChtHoliday($holidayList, $appropriationDate);
+//            if (!$check) {
+//                break;
+//            }
+//        }
+//    }
 
-    $data = array('errorcode' => 0, 'data' => $appropriationDate);
+    $data = array('errorcode' => 0, 'data' => $holidayList);
     http_response_code(200);
     echo json_encode($data);
 }
