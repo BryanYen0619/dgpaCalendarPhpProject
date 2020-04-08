@@ -60,14 +60,14 @@ function getAppropriationDate($input) {
         $new_date = -1;
     }
     
-    $appropriationDate = date_format($new_date, 'Ymd');
+    $appropriationDate = date_format($new_date, 'Y-m-d');
     
     // 判斷請求日期是否為假日
     $checkCurrentDateIsChtHoliday = isChtHoliday($holidayList, $appropriationDate);
     // 找下一個工作日
     if ($checkCurrentDateIsChtHoliday) {
         while (1) {
-            $appropriationDate = date('Ymd', strtotime("$appropriationDate +1 Days"));
+            $appropriationDate = date('Y-m-d', strtotime("$appropriationDate +1 Days"));
             $check = isChtHoliday($holidayList, $appropriationDate);
             if (!$check) {
                 break;
