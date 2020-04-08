@@ -75,7 +75,7 @@ function getAppropriationDate($input) {
         }
     }
 
-    $data = array('errorcode' => 0, 'data' => $holidayList);
+    $data = array('errorcode' => 0, 'data' => $appropriationDate);
     http_response_code(200);
     echo json_encode($data);
 }
