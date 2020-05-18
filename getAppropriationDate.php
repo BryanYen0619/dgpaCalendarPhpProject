@@ -39,6 +39,13 @@ function getAppropriationDate($input) {
         echo json_encode($error);
         return;
     }
+
+    // 判斷通路
+    if (isset($input['type']) == "store") {
+        $isStore = true;
+    } else {
+        $isStore = false;
+    }
     
     // 取得休假列表
     $holidayList = getHolidayList($inputDate);
@@ -48,14 +55,32 @@ function getAppropriationDate($input) {
     $yearCount = date_format($date, 'Y');
     $monthCount = date_format($date, 'm');
     $dayCount = date_format($date, 'd');
+
+    // 超商下下期撥款
+    // 其他下期撥款
     if ($dayCount >= 1 && $dayCount <= 10) {
-        $new_date = date_create($dateYearMonth . "22"); 
-    } else if ($dayCount >= 11 && $dayCount <= 20) {        
-        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
-        $new_date = date_create($dateYearMonth . "02");  
+        if($isStore) { 
+            $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+            $new_date = date_create($dateYearMonth . "02");
+        } else {
+            $new_date = date_create($dateYearMonth . "22"); 
+        }
+    } else if ($dayCount >= 11 && $dayCount <= 20) { 
+        if($isStore) { 
+            $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+            $new_date = date_create($dateYearMonth . "12");
+        } else {       
+            $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+            $new_date = date_create($dateYearMonth . "02");  
+        }
     } else if ($dayCount >= 21 && $dayCount <= 31) {
-        $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
-        $new_date = date_create($dateYearMonth . "12");
+        if($isStore) { 
+            $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+            $new_date = date_create($dateYearMonth . "22");
+        } else {
+            $dateYearMonth = date("Ym", mktime(0, 0, 0, $monthCount + 1, 1, $yearCount));
+            $new_date = date_create($dateYearMonth . "12");
+        }
     } else {
         $new_date = -1;
     }
