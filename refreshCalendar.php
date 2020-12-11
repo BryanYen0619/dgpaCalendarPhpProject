@@ -14,7 +14,7 @@ $response = getDpgaGovCalendarFromServer();
 $responseArray = json_decode($response, true);
 //var_dump($responseArray);
 
-$dataList = $responseArray[];
+$dataList = $responseArray;
 //if ($successStatus == 1) {
 //    $infoList = $responseArray['result'];
 //    if(isset($infoList)) {
