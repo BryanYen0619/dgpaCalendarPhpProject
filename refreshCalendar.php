@@ -14,15 +14,15 @@ $response = getDpgaGovCalendarFromServer();
 $responseArray = json_decode($response, true);
 //var_dump($responseArray);
 
-$successStatus = $responseArray['success'];
-if ($successStatus == 1) {
-    $infoList = $responseArray['result'];
-    if(isset($infoList)) {
-        $version = $infoList['resource_id'];
+$dataList = $responseArray[];
+//if ($successStatus == 1) {
+//    $infoList = $responseArray['result'];
+//    if(isset($infoList)) {
+//        $version = $infoList['resource_id'];
 //        echo "resource_id:".$version."\n";
     
-        $dataList = $infoList['records'];
-        if(isset($dataList)) {
+//        $dataList = $infoList['records'];
+//        if(isset($dataList)) {
             for ($i = 0; $i < sizeof($dataList); $i++){
                 $itemList = $dataList[$i];
 //                var_dump($itemList);
@@ -116,9 +116,9 @@ if ($successStatus == 1) {
                     }
                 }
             }
-        }
-    }
-}
+//        }
+//    }
+//}
 echo "refresh DGPA Gov Calendar Success.\n";
 echo "refresh DGPA Gov Calendar Insert:$insertCount.\n";
 echo "refresh DGPA Gov Calendar Update:$updateCount.\n";
@@ -126,7 +126,7 @@ echo "refresh DGPA Gov Calendar Update:$updateCount.\n";
 echo "====== " . date("Y-m-d h:i:s A") . " END.   ======\n";
 
 function getDpgaGovCalendarFromServer() {
-    $ServiceURL = "https://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000077-002";
+    $ServiceURL = "https://data.ntpc.gov.tw/api/datasets/308DCD75-6434-45BC-A95F-584DA4FED251/json?page=10&size=200";
 
     $headers = array(
         'Content-Type:application/json'
